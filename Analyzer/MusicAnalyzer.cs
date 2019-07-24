@@ -40,7 +40,7 @@ namespace UserAnalyzer.Analyze
                 int ExitCode = Utils.ExecuteCommand("python",out string stdout,out string stderr,_config.LangDetector,LyricFilePath);
                 if(ExitCode == 0)
                 {
-                    System.Console.WriteLine(stdout);
+                    info.Language = stdout;
                 }
                 else
                 {
