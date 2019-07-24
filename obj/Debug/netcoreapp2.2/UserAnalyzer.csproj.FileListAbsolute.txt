@@ -9,3 +9,14 @@
 /Users/cupdesk-mbp/Code/VisualStudioProject/UserAnalyzer/obj/Debug/netcoreapp2.2/UserAnalyzer.AssemblyInfo.cs
 /Users/cupdesk-mbp/Code/VisualStudioProject/UserAnalyzer/obj/Debug/netcoreapp2.2/UserAnalyzer.dll
 /Users/cupdesk-mbp/Code/VisualStudioProject/UserAnalyzer/obj/Debug/netcoreapp2.2/UserAnalyzer.pdb
+D:\Code\VisualStudioProject\analyzer\bin\Debug\netcoreapp2.2\UserAnalyzer.deps.json
+D:\Code\VisualStudioProject\analyzer\bin\Debug\netcoreapp2.2\UserAnalyzer.runtimeconfig.json
+D:\Code\VisualStudioProject\analyzer\bin\Debug\netcoreapp2.2\UserAnalyzer.runtimeconfig.dev.json
+D:\Code\VisualStudioProject\analyzer\bin\Debug\netcoreapp2.2\UserAnalyzer.dll
+D:\Code\VisualStudioProject\analyzer\bin\Debug\netcoreapp2.2\UserAnalyzer.pdb
+D:\Code\VisualStudioProject\analyzer\obj\Debug\netcoreapp2.2\UserAnalyzer.csprojAssemblyReference.cache
+D:\Code\VisualStudioProject\analyzer\obj\Debug\netcoreapp2.2\UserAnalyzer.csproj.CoreCompileInputs.cache
+D:\Code\VisualStudioProject\analyzer\obj\Debug\netcoreapp2.2\UserAnalyzer.AssemblyInfoInputs.cache
+D:\Code\VisualStudioProject\analyzer\obj\Debug\netcoreapp2.2\UserAnalyzer.AssemblyInfo.cs
+D:\Code\VisualStudioProject\analyzer\obj\Debug\netcoreapp2.2\UserAnalyzer.dll
+D:\Code\VisualStudioProject\analyzer\obj\Debug\netcoreapp2.2\UserAnalyzer.pdb

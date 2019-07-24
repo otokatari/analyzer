@@ -13,19 +13,17 @@ namespace UserAnalyzer.Request
 
         public AnalyzerConfig _config { get; set; }
         public RestClient ReqClient { get; set; }
-        public CommonRequest common { get; set; }
 
         public NeteaseRequest(AnalyzerConfig config):base(config)
         {
             ReqClient = new RestClient(config.Netease);
-            common = new CommonRequest(config);
             _config = config;
             SongAudio = "/song/url?id=";
             SongLyric = "/lyric?id=";
 
         }
 
-        public void GetSongInfo(SongInfo info)
+        public void DownloadSongInfo(SongInfo info)
         {
             GetSongAudio(info);
             GetSongLyric(info);

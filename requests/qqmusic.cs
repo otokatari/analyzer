@@ -1,4 +1,0 @@
-namespace UserAnalyzer.Request
-{
-    
-}

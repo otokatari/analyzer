@@ -12,7 +12,6 @@ namespace UserAnalyzer
     class Program
     {
         private static AnalyzerConfig config;
-        private static NeteaseRequest netease;
         
         private static MusicAnalyzer analyzer;
         static void Main(string[] args)
@@ -21,10 +20,9 @@ namespace UserAnalyzer
             if (config != null)
             {
                 DetectAnalyzerFileDirectory();
-                netease = new NeteaseRequest(config);
                 analyzer = new MusicAnalyzer(config);
-
-                ProcessPipeline();
+                int ExitCode = Utils.ExecuteCommand("python",out string stdout,out string stderr,config.LangDetector,"./lyrics/29356312.lrc");
+                System.Console.WriteLine(stdout);
             }
         }
 
@@ -37,11 +35,11 @@ namespace UserAnalyzer
                 SongName = "打ち上げ花火を見るような",
                 ArtistName = "初音ミク",
                 Platform = "netease",
-                AudioFileName = "29356312.mp3"
+                AudioFileName = "29356312.mp3",
+                LyricFileName = "29356312.lrc"
             };
 
-            analyzer.AnalyzeBPM(info);
-            System.Console.WriteLine(info.BPM);
+            analyzer.AnalyzeLanguage(info);
         }
 
         static void LoadConfig()

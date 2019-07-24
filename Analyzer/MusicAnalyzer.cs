@@ -34,7 +34,19 @@ namespace UserAnalyzer.Analyze
         }
         public void AnalyzeLanguage(SongInfo info)
         {
-
+            if(!string.IsNullOrEmpty(info.LyricString) && !string.IsNullOrEmpty(info.LyricFileName))
+            {
+                var LyricFilePath = Path.Combine("./lyrics",info.LyricFileName);
+                int ExitCode = Utils.ExecuteCommand("python",out string stdout,out string stderr,_config.LangDetector,LyricFilePath);
+                if(ExitCode == 0)
+                {
+                    System.Console.WriteLine(stdout);
+                }
+                else
+                {
+                    System.Console.WriteLine($"{ExitCode} -- {stderr}");
+                }
+            }
         }
 
         public void PersistInfoToDb(SongInfo info)
@@ -42,6 +54,4 @@ namespace UserAnalyzer.Analyze
 
         }
     }
-
-
 }
