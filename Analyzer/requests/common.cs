@@ -49,7 +49,7 @@ namespace UserAnalyzer.Analyzer.Request
                 {
                     sw.WriteLine(info.LyricString);
                 }
-                System.Console.WriteLine("成功保存歌词");
+                System.Console.WriteLine($"Successfully saved {info.LyricFileName}.");
             }
             else System.Console.WriteLine($"找不到歌词 -- {info.SongName}");
         }
