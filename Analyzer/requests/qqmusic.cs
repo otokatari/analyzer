@@ -2,7 +2,7 @@ using RestSharp;
 using UserAnalyzer.Configurations;
 using UserAnalyzer.Model;
 
-namespace UserAnalyzer.Request
+namespace UserAnalyzer.Analyzer.Request
 {
     public class QQMusicRequest : CommonRequest
     {

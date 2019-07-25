@@ -4,7 +4,7 @@ using RestSharp;
 using UserAnalyzer.Configurations;
 using UserAnalyzer.Model;
 
-namespace UserAnalyzer.Request
+namespace UserAnalyzer.Analyzer.Request
 {
     public class NeteaseRequest : CommonRequest
     {
@@ -23,7 +23,7 @@ namespace UserAnalyzer.Request
 
         }
 
-        public void DownloadSongInfo(SongInfo info)
+        public void GetSongInfo(SongInfo info)
         {
             GetSongAudio(info);
             GetSongLyric(info);

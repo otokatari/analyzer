@@ -1,34 +1,35 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Code\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj": {}
+    "D:\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj": {}
   },
   "projects": {
-    "D:\\Code\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj": {
+    "D:\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj",
+        "projectUniqueName": "D:\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj",
         "projectName": "UserAnalyzer",
-        "projectPath": "D:\\Code\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\Code\\VisualStudioProject\\analyzer\\obj\\",
+        "projectPath": "D:\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj",
+        "packagesPath": "C:\\Users\\NemesissLin\\.nuget\\packages\\",
+        "outputPath": "D:\\VisualStudioProject\\analyzer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\NemesissLin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp2.2"
+          "netcoreapp2.1"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "E:\\MyNugetPackages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp2.2": {
+          "netcoreapp2.1": {
             "projectReferences": {}
           }
         },
@@ -39,12 +40,11 @@
         }
       },
       "frameworks": {
-        "netcoreapp2.2": {
+        "netcoreapp2.1": {
           "dependencies": {
             "Microsoft.NETCore.App": {
-              "suppressParent": "All",
               "target": "Package",
-              "version": "[2.2.0, )",
+              "version": "[2.1.0, )",
               "autoReferenced": true
             },
             "MongoDB.Driver": {

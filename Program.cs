@@ -2,10 +2,10 @@
 using System.IO;
 using System.Text;
 using Newtonsoft.Json;
-using UserAnalyzer.Analyze;
+using UserAnalyzer.Analyzer;
+using UserAnalyzer.Analyzer.Music;
 using UserAnalyzer.Configurations;
 using UserAnalyzer.Model;
-using UserAnalyzer.Request;
 
 namespace UserAnalyzer
 {
@@ -13,16 +13,15 @@ namespace UserAnalyzer
     {
         private static AnalyzerConfig config;
         
-        private static MusicAnalyzer analyzer;
+        private static AnalyzerServices _services;
         static void Main(string[] args)
         {
             LoadConfig();
             if (config != null)
             {
                 DetectAnalyzerFileDirectory();
-                analyzer = new MusicAnalyzer(config);
-                int ExitCode = Utils.ExecuteCommand("python",out string stdout,out string stderr,config.LangDetector,"./lyrics/29356312.lrc");
-                System.Console.WriteLine(stdout);
+                _services = new AnalyzerServices(config);
+                ProcessPipeline();
             }
         }
 
@@ -31,16 +30,19 @@ namespace UserAnalyzer
         {
             var info = new SongInfo
             {
-                SongID = "29356312",
-                SongName = "打ち上げ花火を見るような",
-                ArtistName = "初音ミク",
-                Platform = "netease",
-                AudioFileName = "29356312.mp3",
-                LyricFileName = "29356312.lrc"
+                SongID = "134683878C7945D01D44E9B5CF0FDF1F",
+                SongName = "勇气",
+                ArtistName = "梁静茹",
+                Platform = "kugou",
+                AudioFileName = "134683878C7945D01D44E9B5CF0FDF1F.mp3",
+                LyricFileName = "134683878C7945D01D44E9B5CF0FDF1F.lrc"
             };
 
-            analyzer.AnalyzeLanguage(info);
+            _services.AnalyzerMusic(info);
         }
+
+
+
 
         static void LoadConfig()
         {

@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Text;
 
@@ -25,5 +26,19 @@ namespace UserAnalyzer
         public static string Connect(this char delimiter, params string[] slices)
                         => new StringBuilder().AppendJoin(delimiter, slices).ToString();
 
+
+        public static bool ContainAllKeys<TJsonObject>(this TJsonObject root,params string[] keys) where TJsonObject: JObject
+        {
+            for (int i = 0; i < keys.Length; i++)
+            {
+                if (!root.ContainsKey(keys[i])) return false;
+                if (i <= keys.Length - 2)
+                {
+                    if(root[keys[i]].Type != JTokenType.Object) return false;
+                    root = root[keys[i]].Value<TJsonObject>();
+                } 
+            }
+            return true;
+        }
     }
 }
