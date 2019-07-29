@@ -3,7 +3,6 @@ using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 using UserAnalyzer.Analyzer;
-using UserAnalyzer.Analyzer.Music;
 using UserAnalyzer.Configurations;
 using UserAnalyzer.Model;
 
@@ -33,9 +32,7 @@ namespace UserAnalyzer
                 SongID = "134683878C7945D01D44E9B5CF0FDF1F",
                 SongName = "勇气",
                 ArtistName = "梁静茹",
-                Platform = "kugou",
-                AudioFileName = "134683878C7945D01D44E9B5CF0FDF1F.mp3",
-                LyricFileName = "134683878C7945D01D44E9B5CF0FDF1F.lrc"
+                Platform = "kugou"
             };
 
             _services.AnalyzerMusic(info);

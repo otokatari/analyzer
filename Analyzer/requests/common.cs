@@ -43,15 +43,16 @@ namespace UserAnalyzer.Analyzer.Request
         }
         public void SaveLyric(SongInfo info)
         {
-            if (!string.IsNullOrEmpty(info.LyricString))
+            if (info.Lyrics.HasLyrics())
             {
-                using (var sw = new StreamWriter(ResolvePath(_config.LyricDownloadPath, info.LyricFileName), false, Encoding.UTF8))
+                var LyricFileName = $"{info.SongID}.lrc";
+                using (var sw = new StreamWriter(ResolvePath(_config.LyricDownloadPath, LyricFileName), false, Encoding.UTF8))
                 {
-                    sw.WriteLine(info.LyricString);
+                    sw.WriteLine(info.Lyrics.Lyric);
                 }
-                System.Console.WriteLine($"Successfully saved {info.LyricFileName}.");
+                System.Console.WriteLine($"Successfully saved {LyricFileName}.");
             }
-            else System.Console.WriteLine($"找不到歌词 -- {info.SongName}");
+            else System.Console.WriteLine($"找不到歌词, 将不保存文件 -- {info.SongName}");
         }
         public static string ResolvePath(string BasePath, string fileName)
         {

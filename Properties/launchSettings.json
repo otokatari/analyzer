@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "UserAnalyzer": {
+      "commandName": "Project",
+      "workingDirectory": "D:\\Code\\VisualStudioProject\\analyzer"
+    }
+  }
+}

@@ -42,7 +42,7 @@ namespace UserAnalyzer.Analyzer.Request
             {
                 var root = JObject.Parse(Resp.Content);
                 var list = root["data"] as JArray;
-                if(list.Count > 0)
+                if(list.Count > 0 && list[0]["url"].Type != JTokenType.Null)
                 {
                     var downloadUrl = list[0]["url"].Value<string>();
                     var fileExt = list[0]["type"].Value<string>();
@@ -51,6 +51,7 @@ namespace UserAnalyzer.Analyzer.Request
                     info.AudioDownloadUrl = downloadUrl;
                     info.AudioFileName = fileName;
                 }
+                else System.Console.WriteLine($"{info.SongID} 此曲版权受限.");
             }
             else System.Console.WriteLine("Cannot find download url.");
         }
@@ -65,18 +66,36 @@ namespace UserAnalyzer.Analyzer.Request
             if(Resp.IsSuccessful)
             {
                 var root = JObject.Parse(Resp.Content);
-                if(root.TryGetValue("uncollected",out JToken NoLyric))
-                {
-                    System.Console.WriteLine($"{info.SongID} -- 这首歌还没有歌词");
-                }
-                else
-                {
-                    var lyric = root["lrc"]["lyric"].Value<string>();
-                    info.LyricString = lyric;
-                    info.LyricFileName = $"{info.SongID}.lrc";
-                }
+
+                var lyrics = ExtractExistsLyrics(root);
+
+                info.Lyrics = lyrics;
             }
             else System.Console.WriteLine("获取歌词内容失败");
+        }
+
+
+        private Lyrics ExtractExistsLyrics(JObject LyricRoot)
+        {
+            // If this song is absolute music or temporaily uncollect lyric.
+            var lyrics = new Lyrics();
+            if(LyricRoot.ContainsKey("nolyric"))
+            {
+                lyrics.AbsoluteMusic = true;
+                return lyrics;
+            }
+            if(LyricRoot.ContainsKey("uncollected"))
+            {
+                lyrics.Uncollected = true;
+                return lyrics;
+            }
+
+            lyrics.Lyric = LyricRoot["lrc"]["lyric"].Value<string>();
+            if(LyricRoot.ContainAllKeys("tlyric","lyric"))
+            {
+                lyrics.TranslatedLyric = LyricRoot["tlyric"]["lyric"].Value<string>();
+            }
+            return lyrics;
         }
     }
 }

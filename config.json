@@ -9,6 +9,6 @@
     "Aubio":"aubio",
     "LangDetector":"LangDetector.py",
     "FFMpeg":"ffmepg",
-    "MongoDBServer":"mongodb://192.168.1.186:27017",
+    "MongoDBServer":"mongodb://111.230.238.192:27018",
     "DatabaseName":"otokatari"
 }

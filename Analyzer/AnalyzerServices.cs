@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UserAnalyzer.Analyzer.Music;
 using UserAnalyzer.Configurations;
 using UserAnalyzer.Model;
@@ -16,11 +17,12 @@ namespace UserAnalyzer.Analyzer
             _collector = new MusicInfoCollector(_config);
         }
 
-        public void AnalyzerMusic(SongInfo info)
+        public bool AnalyzerMusic(SongInfo info)
         {
             _collector.GetSongInfo(info);
             _analyzer.AnalyzeBPM(info);
             _analyzer.AnalyzeLanguage(info);
+            return _analyzer.PersistInfoToDb(info);
         }
     }
 }

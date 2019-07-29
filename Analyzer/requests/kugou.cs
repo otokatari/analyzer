@@ -30,38 +30,56 @@ namespace UserAnalyzer.Analyzer.Request
 
         public void GetSongAudio(SongInfo info)
         {
-            var QueryUrl = SongAudio + info.SongID; // ´Ë´¦¼´ÎªFileHash
+            var QueryUrl = SongAudio + info.SongID; // æ­¤å¤„å³ä¸ºFileHash
             var Req = new RestRequest(QueryUrl, Method.GET);
             var Resp = ReqClient.Execute(Req);
             if(Resp.IsSuccessful)
             {
-                // ²âÊÔ¿´ÓĞÃ»ÓĞ±»·âIP
+                // æµ‹è¯•çœ‹æœ‰æ²¡æœ‰è¢«å°IP
                 var root = JObject.Parse(Resp.Content);
                 var ErrCode = root["err_code"].Value<int>();
                 if(ErrCode == 0)
                 {
-                    if(root.ContainAllKeys("data", "lyrics"))
+                    // Extract lyrics.
+
+                    info.Lyrics = ExtractExistsLyrics(root);
+
+                    // Then extract song url.
+                    string songurl;
+                    if (root.ContainAllKeys("data", "play_url") 
+                            && !string.IsNullOrEmpty((songurl = root["data"]["play_url"].Value<string>())))
                     {
-                        var Lyrics = root["data"]["lyrics"].Value<string>();
-                        info.LyricString = Lyrics;
-                        info.LyricFileName = $"{info.SongID}.lrc";
-                    }
-                    else System.Console.WriteLine($"{info.SongID} »ñÈ¡²»µ½dataÖĞµÄ¸è´ÊĞÅÏ¢.");
-                    if (root.ContainAllKeys("data", "play_url"))
-                    {
-                        info.AudioDownloadUrl = root["data"]["play_url"].Value<string>();
+                        info.AudioDownloadUrl = songurl;
                         info.AudioFileName = $"{info.SongID}.mp3";
                     }
-                    else System.Console.WriteLine($"{info.SongID} »ñÈ¡²»µ½dataÖĞµÄ¸èÇúÏÂÔØµØÖ·.");
+                    else System.Console.WriteLine($"{info.SongID} è·å–ä¸åˆ°dataä¸­çš„æ­Œæ›²ä¸‹è½½åœ°å€.");
                 }
-                else System.Console.WriteLine($"ÇëÇó³öÏÖErrorCode {ErrCode}, ·şÎñÆ÷¿ÉÄÜÕıÔÚ±»·âIP, ÎŞ·¨»ñÈ¡ÒôÀÖµÄÏÂÔØµØÖ·ºÍ¸è´Ê.");
+                else System.Console.WriteLine($"è¯·æ±‚å‡ºç°ErrorCode {ErrCode}, æœåŠ¡å™¨å¯èƒ½æ­£åœ¨è¢«å°IP, æ— æ³•è·å–éŸ³ä¹çš„ä¸‹è½½åœ°å€å’Œæ­Œè¯.");
             }
             else
             {
-                System.Console.WriteLine("ÇëÇóÊ§°Ü£¬ÎŞ·¨»ñÈ¡ÒôÀÖµÄÏÂÔØµØÖ·ºÍ¸è´Ê.");
+                System.Console.WriteLine("è¯·æ±‚å¤±è´¥ï¼Œæ— æ³•è·å–éŸ³ä¹çš„ä¸‹è½½åœ°å€å’Œæ­Œè¯.");
             }
         }
 
-        
+        public Lyrics ExtractExistsLyrics(JObject LyricRoot)
+        {
+            var lyrics = new Lyrics();
+            if(LyricRoot.ContainAllKeys("data","lyrics"))
+            {
+                var LyricString = LyricRoot["data"]["lyrics"].Value<string>();
+                if(!string.IsNullOrEmpty(LyricString))
+                {
+                    lyrics.Lyric = LyricString;
+                }
+                else
+                {
+                    // Simply said no lyric.
+                    lyrics.Uncollected = true;
+                }
+            }
+            // Ok, simply return this lyric instance.
+            return lyrics;
+        }
     }
 }

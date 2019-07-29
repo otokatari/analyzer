@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using System;
 using System.Linq;
 using System.Text;
 
@@ -16,10 +17,20 @@ namespace UserAnalyzer
             pProcess.StartInfo.RedirectStandardError = true;
             pProcess.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             pProcess.StartInfo.CreateNoWindow = true;
-            pProcess.Start();
-            stdout = pProcess.StandardOutput.ReadToEnd();
-            stderr = pProcess.StandardError.ReadToEnd();
-            pProcess.WaitForExit();
+            try
+            {
+                pProcess.Start();
+                stdout = pProcess.StandardOutput.ReadToEnd();
+                stderr = pProcess.StandardError.ReadToEnd();
+                pProcess.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                stdout = string.Empty;
+                stderr = ex.Message;
+                Console.WriteLine($"{program} Ö´ÐÐÊ§°Ü");
+                return -1000;
+            }
             return pProcess.ExitCode;
         }
 

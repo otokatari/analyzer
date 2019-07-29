@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj": {}
+    "D:\\Code\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj": {}
   },
   "projects": {
-    "D:\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj": {
+    "D:\\Code\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj",
+        "projectUniqueName": "D:\\Code\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj",
         "projectName": "UserAnalyzer",
-        "projectPath": "D:\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj",
-        "packagesPath": "C:\\Users\\NemesissLin\\.nuget\\packages\\",
-        "outputPath": "D:\\VisualStudioProject\\analyzer\\obj\\",
+        "projectPath": "D:\\Code\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "D:\\Code\\VisualStudioProject\\analyzer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\NemesissLin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,7 +25,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "E:\\MyNugetPackages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,6 +42,7 @@
         "netcoreapp2.1": {
           "dependencies": {
             "Microsoft.NETCore.App": {
+              "suppressParent": "All",
               "target": "Package",
               "version": "[2.1.0, )",
               "autoReferenced": true
