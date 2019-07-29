@@ -19,7 +19,7 @@ namespace UserAnalyzer.Analyzer.Request
             ReqClient = new RestClient(config.Netease);
             _config = config;
             SongAudio = "/song/url?id=";
-            SongLyric = "/lyric?id=";
+            SongLyric = "/lyric?br=128000&id=";
 
         }
 

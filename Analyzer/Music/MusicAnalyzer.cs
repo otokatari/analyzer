@@ -47,8 +47,7 @@ namespace UserAnalyzer.Analyzer.Music
                 {
                     try
                     {
-                        var ConvertedPath = ConvertMusicToWav(SongFilePath);
-                        SongFilePath = ConvertedPath;
+                        SongFilePath = ConvertMusicToWav(SongFilePath);
                     }
                     catch (FFMpegConvertFailedException ffmpeg)
                     {
