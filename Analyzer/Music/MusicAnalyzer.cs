@@ -1,7 +1,9 @@
+using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MongoDB.Driver;
+using UserAnalyzer.Analyzer.AnalyzerException;
 using UserAnalyzer.Analyzer.DAO;
 using UserAnalyzer.Configurations;
 using UserAnalyzer.Model;
@@ -20,21 +22,56 @@ namespace UserAnalyzer.Analyzer.Music
             context = new MongoContext(config);
         }
 
+        private string ConvertMusicToWav(string OriginalMusicPath)
+        {
+            FileInfo file = new FileInfo(OriginalMusicPath);
+            var Ext = $".{file.Extension}";
+            string ConvertedMusicFilePath = OriginalMusicPath.Replace(Ext, ".wav");
+            string stdout, stderr;
+
+            int ExitCode = Utils.ExecuteCommand(_config.FFMpeg, out stdout, out stderr, "-i", OriginalMusicPath, ConvertedMusicFilePath);
+            if(ExitCode == 0)
+            {
+                return ConvertedMusicFilePath;
+            }
+            throw new FFMpegConvertFailedException($"FFMpeg convert failed with code {ExitCode}", stderr);
+        }
+
         public void AnalyzeBPM(SongInfo info)
         {
             var SongFilePath = Path.Combine(_config.MusicDownloadPath, info.AudioFileName);
             FileInfo file = new FileInfo(SongFilePath);
             if (file.Exists)
             {
+                if(_config.ConvertToWAV)
+                {
+                    try
+                    {
+                        var ConvertedPath = ConvertMusicToWav(SongFilePath);
+                        SongFilePath = ConvertedPath;
+                    }
+                    catch (FFMpegConvertFailedException ffmpeg)
+                    {
+                        Console.Error.WriteLine($"{ffmpeg.Message}    {ffmpeg.FFMpegStdErr}");
+                        return; // End processing BPM.
+                    }
+                }
                 int ExitCode = Utils.ExecuteCommand(_config.Aubio, out string stdout, out string stderr, "tempo", "-H 640", "-v", SongFilePath);
                 if (ExitCode == 0)
                 {
                     var match = BPMMatcher.Match(stdout);
                     info.BPM = match.Success ? (double?)double.Parse(match.Value) : null;
+                    
+                    if(_config.ConvertToWAV)
+                    {
+                        // Because wav file is too big. We need to delete it after evaluating bpm.
+                        file = new FileInfo(SongFilePath); // Re-open wav file path.
+                        if (file.Exists) file.Delete();
+                    }
                 }
                 else
                 {
-                    System.Console.WriteLine($"aubio不正常退出 -- {ExitCode}");
+                    Console.WriteLine($"aubio不正常退出 -- {ExitCode}");
                 }
             }
         }
@@ -50,16 +87,16 @@ namespace UserAnalyzer.Analyzer.Music
                     if (ExitCode == 0)
                     {
                         info.Language = stdout.Trim();
-                        System.Console.WriteLine(stdout);
+                        Console.WriteLine(stdout);
                     }
                     else
                     {
-                        System.Console.WriteLine($"{ExitCode} -- {stderr}");
+                        Console.WriteLine($"{ExitCode} -- {stderr}");
                     }
                 }
-                else System.Console.WriteLine($"{info.SongID} -- 歌词文件不存在!");
+                else Console.WriteLine($"{info.SongID} -- 歌词文件不存在!");
             }
-            else System.Console.WriteLine($"{info.SongID} -- 没有歌词, 不需要分析.");
+            else Console.WriteLine($"{info.SongID} -- 没有歌词, 不需要分析.");
         }
 
         public bool PersistInfoToDb(SongInfo info)

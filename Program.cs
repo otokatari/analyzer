@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UserAnalyzer.Analyzer;
 using UserAnalyzer.Configurations;
@@ -11,8 +13,8 @@ namespace UserAnalyzer
     class Program
     {
         private static AnalyzerConfig config;
-        
         private static AnalyzerServices _services;
+
         static void Main(string[] args)
         {
             LoadConfig();
@@ -20,7 +22,7 @@ namespace UserAnalyzer
             {
                 DetectAnalyzerFileDirectory();
                 _services = new AnalyzerServices(config);
-                ProcessPipeline();
+                // ProcessPipeline();
             }
         }
 
@@ -37,8 +39,6 @@ namespace UserAnalyzer
 
             _services.AnalyzerMusic(info);
         }
-
-
 
 
         static void LoadConfig()

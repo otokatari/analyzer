@@ -51,6 +51,7 @@ namespace UserAnalyzer.Configurations
         public string MongoDBServer { get; set; }
         public string DatabaseName { get; set; }
         public string CollectionName { get; set; }
-	public string PythonInterpreter { get; set; }
+        public string PythonInterpreter { get; set; }
+        public bool ConvertToWAV { get; set; }
     }
 }
