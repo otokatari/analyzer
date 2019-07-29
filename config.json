@@ -10,5 +10,6 @@
     "LangDetector":"LangDetector.py",
     "FFMpeg":"ffmepg",
     "MongoDBServer":"mongodb://111.230.238.192:27018",
-    "DatabaseName":"otokatari"
+    "DatabaseName":"otokatari",
+    "PythonInterpreter":"python3"
 }

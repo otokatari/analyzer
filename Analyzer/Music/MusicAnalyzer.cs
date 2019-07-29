@@ -46,7 +46,7 @@ namespace UserAnalyzer.Analyzer.Music
                 var LyricFilePath = Path.Combine("./lyrics",LyricFileName);
                 if(new FileInfo(LyricFilePath).Exists)
                 {
-                    int ExitCode = Utils.ExecuteCommand("python", out string stdout, out string stderr, _config.LangDetector, LyricFilePath);
+                    int ExitCode = Utils.ExecuteCommand(_config.PythonInterpreter, out string stdout, out string stderr, _config.LangDetector, LyricFilePath);
                     if (ExitCode == 0)
                     {
                         info.Language = stdout.Trim();
