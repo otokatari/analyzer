@@ -8,7 +8,7 @@
   "LyricDownloadPath": "./lyrics",
   "Aubio": "aubio",
   "LangDetector": "LangDetector.py",
-  "FFMpeg": "ffmpeg",
+  "FFMpeg": "ffmepg",
   "MongoDBServer": "mongodb://111.230.238.192:27018",
   "DatabaseName": "otokatari",
   "PythonInterpreter": "python3",

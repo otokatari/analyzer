@@ -25,7 +25,7 @@ namespace UserAnalyzer.Analyzer.Music
         private string ConvertMusicToWav(string OriginalMusicPath)
         {
             FileInfo file = new FileInfo(OriginalMusicPath);
-            var Ext = $".{file.Extension}";
+            var Ext = file.Extension;
             string ConvertedMusicFilePath = OriginalMusicPath.Replace(Ext, ".wav");
             string stdout, stderr;
 

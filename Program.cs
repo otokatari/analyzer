@@ -22,7 +22,7 @@ namespace UserAnalyzer
             {
                 DetectAnalyzerFileDirectory();
                 _services = new AnalyzerServices(config);
-                // ProcessPipeline();
+                ProcessPipeline();
             }
         }
 
@@ -31,10 +31,10 @@ namespace UserAnalyzer
         {
             var info = new SongInfo
             {
-                SongID = "134683878C7945D01D44E9B5CF0FDF1F",
-                SongName = "勇气",
-                ArtistName = "梁静茹",
-                Platform = "kugou"
+                SongID = "1352540393",
+                SongName = "アナタ色コンフェッション",
+                ArtistName = "あやぽんず",
+                Platform = "netease"
             };
 
             _services.AnalyzerMusic(info);
