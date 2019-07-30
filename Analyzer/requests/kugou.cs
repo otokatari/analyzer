@@ -28,7 +28,7 @@ namespace UserAnalyzer.Analyzer.Request
             SaveLyric(info);
         }
 
-        public void GetSongAudio(SongInfo info)
+        private void GetSongAudio(SongInfo info)
         {
             var QueryUrl = SongAudio + info.SongID; // 此处即为FileHash
             var Req = new RestRequest(QueryUrl, Method.GET);

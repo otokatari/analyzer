@@ -31,7 +31,7 @@ namespace UserAnalyzer.Analyzer.Request
             SaveLyric(info);
         }
 
-        public void GetSongAudio(SongInfo info)
+        private void GetSongAudio(SongInfo info)
         {
             RestRequest req = new RestRequest();
             req.Resource = SongAudio + info.SongID;
@@ -53,10 +53,10 @@ namespace UserAnalyzer.Analyzer.Request
                 }
                 else System.Console.WriteLine($"{info.SongID} 此曲版权受限.");
             }
-            else System.Console.WriteLine("Cannot find download url.");
+            else System.Console.WriteLine($"Cannot find download url {info.SongID}.");
         }
 
-        public void GetSongLyric(SongInfo info)
+        private void GetSongLyric(SongInfo info)
         {
             RestRequest req = new RestRequest();
             req.Resource = SongLyric + info.SongID;

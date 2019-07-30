@@ -32,7 +32,7 @@ namespace UserAnalyzer.Analyzer.Music
                     break;
 
                 case "qqmusic":
-                    qqmusic.GetSongAudio(info);
+                    qqmusic.GetSongInfo(info);
                     break;
             }
         }

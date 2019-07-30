@@ -32,7 +32,6 @@ namespace UserAnalyzer
             }
         }
 
-
         static void ProcessPipeline(SimpleMusic info)
         {
             var song = new SongInfo
