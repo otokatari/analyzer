@@ -39,24 +39,7 @@ namespace UserAnalyzer.Analyzer.Request
             if (Resp.IsSuccessful)
             {
                 var root = JObject.Parse(Resp.Content);
-                // if(root.ContainAllKeys("data","items"))
-                // {
-                //     var vkeyRoot = root["data"]["items"].Value<JArray>();
-                //     if(vkeyRoot.Count > 0)
-                //     {
-                //         var vkey = vkeyRoot[0].Value<JObject>()["vkey"].Value<string>();
-                //         if(!string.IsNullOrEmpty(vkey))
-                //         {
-                //             // 拿到正确的vkey, 可以开始下载音乐.
-                //             info.AudioDownloadUrl = string.Format(SongAudioUrlPattern,info.SongID,vkey);
-                //             info.AudioFileName = $"{info.SongID}.m4a";
-                //         }
-                //         else System.Console.WriteLine($"vkey in response is empty: {info.SongID}.");
-                //     }
-                //     else System.Console.WriteLine($"Cannot find vkey from response: {info.SongID}.");
-
-                // }
-                // else System.Console.WriteLine($"Cannot find items field that contains vkey from response: {info.SongID}.");
+                
 
                 Thenable<JObject>
                         .Begin(root)
@@ -70,7 +53,7 @@ namespace UserAnalyzer.Analyzer.Request
                         {
                             if (vkeyRoot.Count > 0)
                                 return vkeyRoot[0].Value<JObject>()["vkey"].Value<string>();
-                            else return that.Reject<string>($"Cannot find vkey from response: {info.SongID}.");
+                            return that.Reject<string>($"Cannot find vkey from response: {info.SongID}.");
                         })
                         .then((that, vkey) =>
                         {

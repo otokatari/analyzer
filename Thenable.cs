@@ -7,7 +7,7 @@ namespace UserAnalyzer
     public class Thenable<T>
     {
         private bool Ended = false;
-        private object RejectReason = null;
+        public object RejectReason = null;
         private Thenable(T data)
         {
             _data = data;
@@ -26,6 +26,12 @@ namespace UserAnalyzer
         }
 
         public T done() => _data;
+
+        public U Reject<U>(string reason)
+        {
+            System.Console.WriteLine(reason);
+            return Reject<U>((object)reason);
+        }
         public U Reject<U>(object reason = null)
         {
             if(!Ended)
