@@ -63,7 +63,7 @@ namespace UserAnalyzer
             consumer = new EventingBasicConsumer(channel);
             consumer.Received += AnalyzerMessageHandler;
             channel.BasicConsume(config.RabbitMQQueueName,false,consumer);
-            System.Console.WriteLine($"Music analyzer is running in {config.RabbitMQServer}, {config.RabbitMQQueueName}");
+            System.Console.WriteLine($"Music analyzer is running on {config.RabbitMQServer}, {config.RabbitMQQueueName}");
         }
         
         static void AnalyzerMessageHandler(object model, BasicDeliverEventArgs ea)
