@@ -70,6 +70,7 @@ namespace UserAnalyzer
         {
             try
             {
+                System.Console.WriteLine($"{DateTime.Now.ToString("yyyy/MM/dd H:mm:ss")} Receiving message!");
                 var MusicInfoJson = Encoding.UTF8.GetString(ea.Body);
                 var MusicInfo = JsonConvert.DeserializeObject(MusicInfoJson, typeof(SimpleMusic)) as SimpleMusic;
                 Task.Run(() =>
