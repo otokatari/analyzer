@@ -1,28 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "/home/nemesiss/otokatari/analyzer/UserAnalyzer.csproj": {}
+    "D:\\Code\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj": {}
   },
   "projects": {
-    "/home/nemesiss/otokatari/analyzer/UserAnalyzer.csproj": {
+    "D:\\Code\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/nemesiss/otokatari/analyzer/UserAnalyzer.csproj",
+        "projectUniqueName": "D:\\Code\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj",
         "projectName": "UserAnalyzer",
-        "projectPath": "/home/nemesiss/otokatari/analyzer/UserAnalyzer.csproj",
-        "packagesPath": "/home/nemesiss/.nuget/packages/",
-        "outputPath": "/home/nemesiss/otokatari/analyzer/obj/",
+        "projectPath": "D:\\Code\\VisualStudioProject\\analyzer\\UserAnalyzer.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "D:\\Code\\VisualStudioProject\\analyzer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/home/nemesiss/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -40,6 +42,7 @@
         "netcoreapp2.1": {
           "dependencies": {
             "Microsoft.NETCore.App": {
+              "suppressParent": "All",
               "target": "Package",
               "version": "[2.1.0, )",
               "autoReferenced": true
@@ -51,6 +54,10 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[12.0.2, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[5.1.0, )"
             },
             "RestSharp": {
               "target": "Package",

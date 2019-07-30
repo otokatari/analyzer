@@ -42,7 +42,7 @@ namespace UserAnalyzer.Configurations
             }
         }
         public string RabbitMQServer { get; set; }
-
+        public string RabbitMQQueueName { get; set; }
         public string MusicDownloadPath { get; set; }
         public string LyricDownloadPath { get; set; }
         public string Aubio { get; set; }
