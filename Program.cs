@@ -22,7 +22,7 @@ namespace UserAnalyzer
 
         static void Main(string[] args)
         {
-            LoadConfig();
+            LoadConfig(args.Length > 0);
             if (config != null)
             {
                 DetectAnalyzerFileDirectory();
@@ -87,15 +87,18 @@ namespace UserAnalyzer
         }
 
 
-        static void LoadConfig()
+        static void LoadConfig(bool prod)
         {
             string ConfigJson = string.Empty;
             try
             {
-                using (var sr = new StreamReader("config.json", Encoding.UTF8))
+                var prodFlag = prod ? "-prod" : "";
+                var configFile = "config" + prodFlag + ".json";
+                using (var sr = new StreamReader(configFile, Encoding.UTF8))
                 {
                     ConfigJson = sr.ReadToEnd();
                 }
+                System.Console.WriteLine($"Configuration {configFile} loaded.");
             }
             catch (FileNotFoundException fileNotFoundEx)
             {
