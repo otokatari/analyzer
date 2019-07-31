@@ -3,7 +3,7 @@
 	"Netease": "/netease",
 	"Kugou": "/kugou",
 	"QQMusic": "/qqmusic",
-	"RabbitMQServer": "129.204.223.158",
+	"RabbitMQServer": "111.230.238.192",
 	"RabbitMQQueueName": "MusicAnalyzeQueue",
 	"MusicDownloadPath": "./music",
 	"LyricDownloadPath": "./lyrics",

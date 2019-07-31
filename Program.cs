@@ -53,7 +53,7 @@ namespace UserAnalyzer
 
         static void InitAnalyzerConsumer()
         {
-            var factory = new ConnectionFactory { HostName = config.RabbitMQServer };
+            var factory = new ConnectionFactory { HostName = config.RabbitMQServer, UserName = "guest", Password = "otokatarimq" };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
 

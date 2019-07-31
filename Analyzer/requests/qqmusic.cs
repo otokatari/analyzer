@@ -40,7 +40,6 @@ namespace UserAnalyzer.Analyzer.Request
             {
                 var root = JObject.Parse(Resp.Content);
                 
-
                 Thenable<JObject>
                         .Begin(root)
                         .then((that, data) =>
@@ -102,8 +101,8 @@ namespace UserAnalyzer.Analyzer.Request
                             else
                             {
                                 lyrics.Lyric = textLyric;
-                                info.Lyrics = lyrics;
                             }
+                            info.Lyrics = lyrics;
                             return lyrics;
                         })
                         .done();

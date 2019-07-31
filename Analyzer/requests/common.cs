@@ -43,7 +43,7 @@ namespace UserAnalyzer.Analyzer.Request
         }
         public void SaveLyric(SongInfo info)
         {
-            if (info.Lyrics.HasLyrics())
+            if (info.Lyrics!=null)
             {
                 var LyricFileName = $"{info.SongID}.lrc";
                 using (var sw = new StreamWriter(ResolvePath(_config.LyricDownloadPath, LyricFileName), false, Encoding.UTF8))
