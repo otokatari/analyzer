@@ -14,9 +14,9 @@ namespace UserAnalyzer
             Ended = rejected;
         }
         public T _data;
-        public static Thenable<T> Begin<T>(T data, bool rejected = false)
+        public static Thenable<TResult> Begin<TResult>(TResult data, bool rejected = false)
         {
-            return new Thenable<T>(data, rejected);
+            return new Thenable<TResult>(data, rejected);
         }
 
         public Thenable<U> then<U>(Func<Thenable<T>, T, U> handle)

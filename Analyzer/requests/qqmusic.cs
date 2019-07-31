@@ -81,32 +81,32 @@ namespace UserAnalyzer.Analyzer.Request
                 var root = JObject.Parse(Resp.Content);
 
                 Thenable<JObject>
-                                .Begin(root)
-                                .then((that, data) =>
-                                {
-                                    if (0 == data["retcode"].Value<int>())
-                                        return data["lyric"].Value<string>();
-                                    return that.Reject<string>($"SongID is wrong. {info.SongID}");
-                                })
-                                .then((that, Base64Lyric) =>
-                                {
-                                    var lyricBytes = Convert.FromBase64String(Base64Lyric);
-                                    var textLyric = Encoding.UTF8.GetString(lyricBytes);
+                        .Begin(root)
+                        .then((that, data) =>
+                        {
+                            if (0 == data["retcode"].Value<int>())
+                                return data["lyric"].Value<string>();
+                            return that.Reject<string>($"SongID is wrong. {info.SongID}");
+                        })
+                        .then((that, Base64Lyric) =>
+                        {
+                            var lyricBytes = Convert.FromBase64String(Base64Lyric);
+                            var textLyric = Encoding.UTF8.GetString(lyricBytes);
 
-                                    var lyrics = new Lyrics();
-                                    if (textLyric.Contains("此歌曲为没有填词的纯音乐，请您欣赏"))
-                                    {
-                                        lyrics.Uncollected = true;
-                                        Console.WriteLine($"No lyric. {info.SongID}");
-                                    }
-                                    else
-                                    {
-                                        lyrics.Lyric = textLyric;
-                                        info.Lyrics = lyrics;
-                                    }
-                                    return lyrics;
-                                })
-                                .done();
+                            var lyrics = new Lyrics();
+                            if (textLyric.Contains("此歌曲为没有填词的纯音乐，请您欣赏"))
+                            {
+                                lyrics.Uncollected = true;
+                                Console.WriteLine($"No lyric. {info.SongID}");
+                            }
+                            else
+                            {
+                                lyrics.Lyric = textLyric;
+                                info.Lyrics = lyrics;
+                            }
+                            return lyrics;
+                        })
+                        .done();
             }
 
             else System.Console.WriteLine($"Cannot get lyric content: {info.SongID}.");
