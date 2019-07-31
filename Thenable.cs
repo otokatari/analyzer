@@ -8,34 +8,38 @@ namespace UserAnalyzer
     {
         private bool Ended = false;
         public object RejectReason = null;
-        private Thenable(T data)
+        private Thenable(T data, bool rejected)
         {
             _data = data;
+            Ended = rejected;
         }
         public T _data;
-        public static Thenable<T> Begin<T>(T data)
+        public static Thenable<T> Begin<T>(T data, bool rejected = false)
         {
-            return new Thenable<T>(data);
+            return new Thenable<T>(data, rejected);
         }
 
-        public Thenable<U> then<U>(Func<Thenable<T>,T,U> handle)
+        public Thenable<U> then<U>(Func<Thenable<T>, T, U> handle)
         {
-            if(Ended)
-                return Begin(default(U));
-            return Begin(handle(this,_data));
+            if (Ended)
+                return Begin(default(U), true);
+            try
+            {
+                return Begin(handle(this, _data), Ended);
+            }
+            catch (Exception ex)
+            {
+                return Begin(Reject<U>(ex.Message), true);
+            }
         }
 
-        public T done() => _data;
+        public void done() { Ended = true; }
 
-        public U Reject<U>(string reason)
-        {
-            System.Console.WriteLine(reason);
-            return Reject<U>((object)reason);
-        }
         public U Reject<U>(object reason = null)
         {
-            if(!Ended)
+            if (!Ended)
             {
+                if (reason is string) System.Console.WriteLine(reason as string);
                 RejectReason = reason;
                 Ended = true;
                 return default(U);

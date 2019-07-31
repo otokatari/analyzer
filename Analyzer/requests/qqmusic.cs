@@ -80,7 +80,7 @@ namespace UserAnalyzer.Analyzer.Request
             {
                 var root = JObject.Parse(Resp.Content);
 
-                var _lyrics = Thenable<JObject>
+                Thenable<JObject>
                                 .Begin(root)
                                 .then((that, data) =>
                                 {
@@ -102,11 +102,11 @@ namespace UserAnalyzer.Analyzer.Request
                                     else
                                     {
                                         lyrics.Lyric = textLyric;
+                                        info.Lyrics = lyrics;
                                     }
                                     return lyrics;
                                 })
                                 .done();
-                info.Lyrics = _lyrics;
             }
 
             else System.Console.WriteLine($"Cannot get lyric content: {info.SongID}.");
