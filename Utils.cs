@@ -57,5 +57,7 @@ namespace UserAnalyzer
         public static DateTime UnixToDate(long unix) => new DateTime(1970, 1, 1).AddSeconds(unix);
 
         public static long NowToUnix() => DateToUnix(DateTime.Now);
+
+        public static long GetSomeDaysUnix(int days) => Utils.DateToUnix(DateTime.Now.AddDays(days));
     }
 }

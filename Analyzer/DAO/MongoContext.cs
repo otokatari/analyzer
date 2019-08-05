@@ -8,8 +8,8 @@ namespace UserAnalyzer.Analyzer.DAO
     {
         public readonly IMongoCollection<SystemMusicLibrary> MusicLibrary;
         public readonly IMongoCollection<UserBehaviour> Behaviour;
-
         public readonly IMongoCollection<UserListeningTimeSpan> UserTimeSpan;
+        public readonly IMongoCollection<UserLikeBpm> UserLikeBpm;
 
         public readonly MongoClient client;
         private readonly AnalyzerConfig _config;
@@ -21,6 +21,7 @@ namespace UserAnalyzer.Analyzer.DAO
             MusicLibrary = db.GetCollection<SystemMusicLibrary>("SystemMusicLibrary");
             Behaviour = db.GetCollection<UserBehaviour>("UserBehaviour");
             UserTimeSpan = db.GetCollection<UserListeningTimeSpan>("UserListeningTimeSpan");
+            UserLikeBpm = db.GetCollection<UserLikeBpm>("UserLikeBpm");
         }
     }
 }

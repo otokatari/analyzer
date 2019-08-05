@@ -18,7 +18,7 @@ namespace UserAnalyzer.Analyzer.User
         public async void Analyze()
         {
             // 拿到昨天到今天所有产生的听歌行为
-            var Before180DaysUnix = GetSomeDaysUnix(-1);
+            var Before180DaysUnix = Utils.GetSomeDaysUnix(-1);
             var filter = Builders<UserBehaviour>.Filter;
             var behaviourFilter = filter.Gte(r => r.Time,Before180DaysUnix) & filter.Eq(r => r.Behaviour, "listen");
             var behavioursList = await (await _context.Behaviour.FindAsync(behaviourFilter)).ToListAsync();
@@ -38,7 +38,7 @@ namespace UserAnalyzer.Analyzer.User
                     behavioursDics.Add(be.Userid,list);
                 }
             }
-            
+
             foreach (var user in behavioursDics)
             {
                 var Userid = user.Key;
@@ -64,7 +64,7 @@ namespace UserAnalyzer.Analyzer.User
                     combinedVector = records.TimeVector;
                     for (int i = 0; i < combinedVector.Length; i++)
                     {
-                        combinedVector[i] = (vector[i] + combinedVector[i]) / 2f;
+                        combinedVector[i] = combinedVector[i] * 0.75 + vector[i] * 0.25;
                     }
                     var userFilter = Builders<UserListeningTimeSpan>.Filter.Eq(r => r.Userid, Userid);
                     var updater = Builders<UserListeningTimeSpan>.Update.Set(r => r.TimeVector, combinedVector);
@@ -83,6 +83,6 @@ namespace UserAnalyzer.Analyzer.User
             }
         }
 
-        private long GetSomeDaysUnix(int days) => Utils.DateToUnix(DateTime.Now.AddDays(days));
+        
     }
 }
