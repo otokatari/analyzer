@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using UserAnalyzer.Analyzer.Music;
 using UserAnalyzer.Configurations;
 using UserAnalyzer.Model;

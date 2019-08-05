@@ -28,7 +28,7 @@ namespace UserAnalyzer
             {
                 stdout = string.Empty;
                 stderr = ex.Message;
-                Console.WriteLine($"{program} Ö´ÐÐÊ§°Ü");
+                Console.WriteLine($"{program} Ö´ï¿½ï¿½Ê§ï¿½ï¿½");
                 return -1000;
             }
             return pProcess.ExitCode;
@@ -38,20 +38,24 @@ namespace UserAnalyzer
                         => new StringBuilder().AppendJoin(delimiter, slices).ToString();
 
 
-        public static bool ContainAllKeys<TJsonObject>(this TJsonObject root,params string[] keys) where TJsonObject: JObject
+        public static bool ContainAllKeys<TJsonObject>(this TJsonObject root, params string[] keys) where TJsonObject : JObject
         {
             for (int i = 0; i < keys.Length; i++)
             {
                 if (!root.ContainsKey(keys[i])) return false;
                 if (i <= keys.Length - 2)
                 {
-                    if(root[keys[i]].Type != JTokenType.Object) return false;
+                    if (root[keys[i]].Type != JTokenType.Object) return false;
                     root = root[keys[i]].Value<TJsonObject>();
-                } 
+                }
             }
             return true;
         }
 
+        public static long DateToUnix(DateTime dt) => (long)(dt.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalSeconds;
 
+        public static DateTime UnixToDate(long unix) => new DateTime(1970, 1, 1).AddSeconds(unix);
+
+        public static long NowToUnix() => DateToUnix(DateTime.Now);
     }
 }

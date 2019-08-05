@@ -6,18 +6,18 @@ using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using UserAnalyzer.Analyzer;
+using UserAnalyzer.Analyzer.DAO;
 using UserAnalyzer.Configurations;
 using UserAnalyzer.Model;
 namespace UserAnalyzer
 {
     class Program
     {
+        private static MongoContext context;
         private static AnalyzerConfig config;
         private static AnalyzerServices _services;
-
         private static IConnection connection;
         private static IModel channel;
-
         private static EventingBasicConsumer consumer;
 
         static void Main(string[] args)
@@ -26,7 +26,10 @@ namespace UserAnalyzer
             if (config != null)
             {
                 DetectAnalyzerFileDirectory();
+
                 _services = new AnalyzerServices(config);
+                context = new MongoContext(config);
+                
                 InitAnalyzerConsumer();
                 WaitForProcessingAsyncTask();
             }
