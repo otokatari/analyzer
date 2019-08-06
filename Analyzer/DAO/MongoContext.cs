@@ -11,6 +11,8 @@ namespace UserAnalyzer.Analyzer.DAO
         public readonly IMongoCollection<UserListeningTimeSpan> UserTimeSpan;
         public readonly IMongoCollection<UserLikeBpm> UserLikeBpm;
 
+        public readonly IMongoCollection<UserLikeLanguage> UserLikeLanguage;
+
         public readonly MongoClient client;
         private readonly AnalyzerConfig _config;
         public MongoContext(AnalyzerConfig config)
@@ -22,6 +24,7 @@ namespace UserAnalyzer.Analyzer.DAO
             Behaviour = db.GetCollection<UserBehaviour>("UserBehaviour");
             UserTimeSpan = db.GetCollection<UserListeningTimeSpan>("UserListeningTimeSpan");
             UserLikeBpm = db.GetCollection<UserLikeBpm>("UserLikeBpm");
+            UserLikeLanguage = db.GetCollection<UserLikeLanguage>("UserLikeLanguage");
         }
     }
 }

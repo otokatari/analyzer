@@ -5,21 +5,25 @@ using MongoDB.Driver;
 using UserAnalyzer.Analyzer.DAO;
 using UserAnalyzer.Model;
 using System.Linq;
+
 namespace UserAnalyzer.Analyzer.User
 {
-    public class ListeningBPM
+    public class ListeningLanguage
     {
         private readonly MongoContext _context;
-        public ListeningBPM(MongoContext context)
+        public ListeningLanguage(MongoContext context)
         {
-            _context = context;
+            _context = context;   
         }
+    
 
         public async void Analyze()
         {
+            // 对于语种类型，也是像歌词分析一样。3/4 : 1/4
 
+            
             var filter = Builders<BsonDocument>.Filter;
-            var matchFilter = filter.Size("music_detail", 1) & filter.Gt("music_detail.bpm", 0) & filter.Gt("time", Utils.GetSomeDaysUnix(-1));
+            var matchFilter = filter.Size("music_detail", 1) & filter.Ne("music_detail.language",BsonNull.Value) & filter.Gt("time", Utils.GetSomeDaysUnix(-1));
             var result = _context.Behaviour
                                         .Aggregate()
                                         .Lookup("SystemMusicLibrary", "music.musicid", "musicid", "music_detail")
@@ -27,13 +31,6 @@ namespace UserAnalyzer.Analyzer.User
                                         .Project("{ music_detail : 1, userid: 1, time: 1} ");
 
             var resultList = await result.ToListAsync();
-
-            /*
-                * 80以下: 慢歌
-                * 80-100: 较慢歌
-                * 100-130: 中速歌曲
-                * 130以上: 快歌
-             */
 
             var behaviourDics = new Dictionary<string, List<SystemMusicLibrary>>();
             foreach (var item in resultList)
@@ -54,66 +51,59 @@ namespace UserAnalyzer.Analyzer.User
                 }
             }
 
-            // 分析每个用户对应的BPM
+
             foreach (var user in behaviourDics)
             {
+                double[] langs = new double[8];
                 long total = 0;
-                double[] vector = new double[4];
 
-                foreach (var item in user.Value)
+                foreach (var music in user.Value)
                 {
-                    var bpm = item.Bpm;
-                    if (bpm < 80)
-                    {
-                        vector[0]++;
-                    }
-                    else if (80 <= bpm && bpm < 100)
-                    {
-                        vector[1]++;
-                    }
-                    else if (100 <= bpm && bpm < 130)
-                    {
-                        vector[2]++;
-                    }
-                    else
-                    {
-                        vector[3]++;
-                    }
+                    langs[GetLanguageIndex(music.Language)]++;
                     total++;
                 }
-                // 归一化
-                vector = Utils.Normalize(vector,total);
 
-                var records = _context.UserLikeBpm.AsQueryable()
-                                                  .FirstOrDefault(r => r.Userid == user.Key);
-                
+                langs = Utils.Normalize(langs,total);
+
+                var records = _context.UserLikeLanguage.AsQueryable().FirstOrDefault(x => x.Userid == user.Key);
                 double[] combinedVector = null;
                 if(records != null)
                 {
                     // 已存在记录
-                    combinedVector = records.BpmVector;
-                    for (int i = 0; i < 4; i++)
+                    combinedVector = records.LanguageVector;
+                    for (int i = 0; i < combinedVector.Length; i++)
                     {
-                        combinedVector[i] = combinedVector[i] * 0.75 + vector[i] * 0.25;
+                        combinedVector[i] = combinedVector[i] * 0.75 + langs[i] * 0.25;
                     }
                     
                     combinedVector = Utils.Normalize(combinedVector,total);
 
-                    var userFilter = Builders<UserLikeBpm>.Filter.Eq(r => r.Userid,user.Key);
-                    var updater = Builders<UserLikeBpm>.Update.Set(r => r.BpmVector,combinedVector);
-                    var updatedResult = await _context.UserLikeBpm.UpdateOneAsync(userFilter,updater);
+                    var userFilter = Builders<UserLikeLanguage>.Filter.Eq(r => r.Userid,user.Key);
+                    var updater = Builders<UserLikeLanguage>.Update.Set(r => r.LanguageVector,combinedVector);
+                    var updatedResult = await _context.UserLikeLanguage.UpdateOneAsync(userFilter,updater);
                 }
                 else
                 {
-                    combinedVector = vector;
-                    var document = new UserLikeBpm
+                    combinedVector = langs;
+                    var document = new UserLikeLanguage
                     {
                         Userid = user.Key,
-                        BpmVector = combinedVector
+                        LanguageVector = combinedVector
                     };
-                    await _context.UserLikeBpm.InsertOneAsync(document);
+                    await _context.UserLikeLanguage.InsertOneAsync(document);
                 }
             }
         }
+
+        private int GetLanguageIndex(string LanguageCode)
+        {
+            var LanguageRFCCode = new[] { "zh", "zh-Hant", "ja", "en", "ko", "fr", "other", "pure" };
+            for (int i = 0; i < LanguageRFCCode.Length; i++)
+            {
+                if(LanguageCode == LanguageRFCCode[i]) return i;
+            }
+            return 6;
+        }
     }
 }
+

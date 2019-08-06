@@ -86,7 +86,7 @@ namespace UserAnalyzer.Analyzer.Music
                     if (ExitCode == 0)
                     {
                         info.Language = stdout.Trim();
-                        Console.WriteLine(stdout);
+                        // Console.WriteLine(stdout);
                     }
                     else
                     {
@@ -94,6 +94,10 @@ namespace UserAnalyzer.Analyzer.Music
                     }
                 }
                 else Console.WriteLine($"{info.SongID} -- 歌词文件不存在!");
+            }
+            else if(info.Lyrics.AbsoluteMusic)
+            {
+                info.Language = "pure";
             }
             else Console.WriteLine($"{info.SongID} -- 没有歌词, 不需要分析.");
         }

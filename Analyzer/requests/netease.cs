@@ -89,7 +89,6 @@ namespace UserAnalyzer.Analyzer.Request
                 lyrics.Uncollected = true;
                 return lyrics;
             }
-
             lyrics.Lyric = LyricRoot["lrc"]["lyric"].Value<string>();
             if(LyricRoot.ContainAllKeys("tlyric","lyric"))
             {

@@ -51,10 +51,8 @@ namespace UserAnalyzer.Analyzer.User
                 }
                 // 进行归一化：
 
-                for (int i = 0; i < vector.Length; i++)
-                {
-                    vector[i] = vector[i]/total;
-                }
+
+                vector = Utils.Normalize(vector,total);
 
                 // 看看此用户之前有没有记录过听歌时间
                 var records = _context.UserTimeSpan.AsQueryable().FirstOrDefault(r => r.Userid == Userid);
@@ -66,6 +64,9 @@ namespace UserAnalyzer.Analyzer.User
                     {
                         combinedVector[i] = combinedVector[i] * 0.75 + vector[i] * 0.25;
                     }
+                    
+                    combinedVector = Utils.Normalize(combinedVector,total);
+
                     var userFilter = Builders<UserListeningTimeSpan>.Filter.Eq(r => r.Userid, Userid);
                     var updater = Builders<UserListeningTimeSpan>.Update.Set(r => r.TimeVector, combinedVector);
                     var result = await _context.UserTimeSpan.UpdateOneAsync(userFilter, updater);

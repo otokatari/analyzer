@@ -95,7 +95,7 @@ namespace UserAnalyzer.Analyzer.Request
                             var lyrics = new Lyrics();
                             if (textLyric.Contains("此歌曲为没有填词的纯音乐，请您欣赏"))
                             {
-                                lyrics.Uncollected = true;
+                                lyrics.AbsoluteMusic = true;
                                 Console.WriteLine($"No lyric. {info.SongID}");
                             }
                             else

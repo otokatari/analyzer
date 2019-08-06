@@ -59,5 +59,18 @@ namespace UserAnalyzer
         public static long NowToUnix() => DateToUnix(DateTime.Now);
 
         public static long GetSomeDaysUnix(int days) => Utils.DateToUnix(DateTime.Now.AddDays(days));
+
+
+        public static double[] Normalize(double[] array,long total)
+        {
+            double ModPow = array.Aggregate((a,b) => a*a + b*b);
+            double Mod = Math.Sqrt(ModPow);
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] /= Mod;
+            }
+            return array;
+        }
     }
 }
