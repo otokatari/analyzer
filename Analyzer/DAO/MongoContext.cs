@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using MongoDB.Driver;
 using UserAnalyzer.Configurations;
 using UserAnalyzer.Model;
@@ -10,7 +11,8 @@ namespace UserAnalyzer.Analyzer.DAO
         public readonly IMongoCollection<UserBehaviour> Behaviour;
         public readonly IMongoCollection<UserListeningTimeSpan> UserTimeSpan;
         public readonly IMongoCollection<UserLikeBpm> UserLikeBpm;
-
+        public readonly IMongoCollection<Singers> Singers;
+        public readonly IMongoCollection<UserSavedSingerList<ObjectId>> UserSavedSingerList;
         public readonly IMongoCollection<UserLikeLanguage> UserLikeLanguage;
 
         public readonly MongoClient client;
@@ -25,6 +27,8 @@ namespace UserAnalyzer.Analyzer.DAO
             UserTimeSpan = db.GetCollection<UserListeningTimeSpan>("UserListeningTimeSpan");
             UserLikeBpm = db.GetCollection<UserLikeBpm>("UserLikeBpm");
             UserLikeLanguage = db.GetCollection<UserLikeLanguage>("UserLikeLanguage");
+            UserSavedSingerList = db.GetCollection<UserSavedSingerList<ObjectId>>("UserSavedSingerList");
+            Singers = db.GetCollection<Singers>("Singers");
         }
     }
 }
